@@ -16,7 +16,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         public bool interaction = false;
         private bool chosenToInteract = false; 
         private Vector3 waitLocation;
-        public Vector3 coverLocation;
+        private Vector3 coverLocation;
         public Vector3 GetCoverLocation() { return coverLocation; }
         public void SetCoverLocation(Vector3 co) { coverLocation = co; }
         public bool GetChosenToInteract() { return chosenToInteract; }
@@ -113,17 +113,19 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                             jump = false; 
                         WaitState(i.GetComponent<CoverBehaviour>().interactDirection, jump);
                         //If we are at switch
-                        bool atSwitch; 
-                        if (i.GetComponent<SwitchBehaviour>() != null)
-                            atSwitch = true; 
-                        else
-                            atSwitch = false;
-                        //Find platform
-                        foreach (GameObject x in interactables)
-                        {
-                            if (x.GetComponent<MovingPlatBehaviour>() != null)
-                                x.GetComponent<MovingPlatBehaviour>().activate = atSwitch;
-                        }
+						if (i.GetComponent<SwitchBehaviour> () != null) 
+						{
+							foreach (GameObject x in interactables) 
+								if (x.GetComponent<MovingPlatBehaviour> () != null) 
+									if (!i.GetComponent<SwitchBehaviour> ().switchJammed) 
+										x.GetComponent<MovingPlatBehaviour> ().Activate (true);
+						}
+						
+
+						//Return early if we are jamming door in current state
+
+                        //Find door
+
                         return true; 
                     }
                     navMeshAgent.SetDestination(i.transform.position);

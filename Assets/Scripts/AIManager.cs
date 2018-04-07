@@ -66,17 +66,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         {
             //Find closest team mate to interactable
             int closestTeamMate = 0;
-            int memberCounter = 0;
-            foreach (GameObject x in teamMembers)
+			for (int i = 0; i < teamMembers.Length; i++)
             {
                 // if the distance between this team member and the interactable is smaller than the distance of the closest team mate 
-                if (Vector3.Distance(x.transform.position, interactable.transform.position) < 
+				if (Vector3.Distance(teamMembers[i].transform.position, interactable.transform.position) < 
                     Vector3.Distance(teamMembers[closestTeamMate].transform.position, interactable.transform.position))
-                {
                     //Change this to closest team mate 
-                    closestTeamMate = memberCounter;
-                }
-                memberCounter++;
+                    closestTeamMate = i;
             }
             Debug.Log("Closest team member is member " + closestTeamMate.ToString());
             return teamMembers[closestTeamMate];

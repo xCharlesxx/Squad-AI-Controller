@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MovingPlatBehaviour : CoverBehaviour {
 
-    public bool activate;
+    private bool activate;
     public Transform platform;
     public Transform pos1;
     public Transform pos2;
@@ -31,6 +31,11 @@ public class MovingPlatBehaviour : CoverBehaviour {
             directionOfTravel = pos1.position;
             rotationOfTravel = pos1.rotation; 
         }
+	}
+
+	public void Activate(bool active)
+	{
+		activate = active; 
 	}
 
     void FixedUpdate()

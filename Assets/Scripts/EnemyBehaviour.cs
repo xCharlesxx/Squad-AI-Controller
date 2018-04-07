@@ -19,7 +19,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         GameObject ethanBody;
         GameObject ethanGlasses;
-        GameObject chaseIntruder;
+        GameObject chasingIntruder;
         GameObject[] wayPoints; 
         public Material Body;
         public Material Glasses;
@@ -57,7 +57,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             foreach (GameObject g in intruders)
                 if (Vector3.Distance(g.transform.position, gameObject.transform.position) < 4)
                 {
-                    chaseIntruder = g;
+                    chasingIntruder = g;
                     state = State.Chase;
                     break;
                 }
@@ -92,18 +92,18 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         }
         void Chase()
         {
-            if (Vector3.Distance(gameObject.transform.position, chaseIntruder.transform.position) < 8)
+            if (Vector3.Distance(gameObject.transform.position, chasingIntruder.transform.position) < 8)
             {
-                if (Vector3.Distance(gameObject.transform.position, chaseIntruder.transform.position) < 1)
+                if (Vector3.Distance(gameObject.transform.position, chasingIntruder.transform.position) < 1)
                 {
-                    if (chaseIntruder == GameObject.FindGameObjectWithTag("Player"))
+                    if (chasingIntruder == GameObject.FindGameObjectWithTag("Player"))
                         Application.LoadLevel(Application.loadedLevel); 
                     for (int i = 0; i < intruders.Count; i++)
-                        if (intruders[i] == chaseIntruder)
+                        if (intruders[i] == chasingIntruder)
                         {
-                            chaseIntruder.SetActive(false);
+                            chasingIntruder.SetActive(false);
                             intruders.RemoveAt(i);
-                            chaseIntruder = null;
+                            chasingIntruder = null;
                             state = State.Patrol; 
                             break; 
                         }
@@ -112,7 +112,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 else
                 {
                     character.Move(navMeshAgent.desiredVelocity, false, false);
-                    navMeshAgent.SetDestination(chaseIntruder.transform.position);
+                    navMeshAgent.SetDestination(chasingIntruder.transform.position);
                 }
 
             }

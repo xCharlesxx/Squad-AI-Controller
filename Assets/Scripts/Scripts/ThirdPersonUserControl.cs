@@ -27,12 +27,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
         private Transform m_Cam;                  // A reference to the main camera in the scenes transform
         private Vector3 m_CamForward;             // The current forward direction of the camera
-        private Vector3 m_Move;
-        private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
+		private Vector3 m_Move;                   // the world-relative desired move direction, calculated from the camForward and user input.
+        private bool m_Jump;                      
         public State state;
         private Canvas canvas;
         private GameObject[] AIs;
         private GameObject[] cover; 
+
         private void Start()
         {
             // get the transform of the main camera
@@ -57,7 +58,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         private void Update()
         {
-            m_Character.GetComponent<ThirdPersonCharacter>().m_JumpPower = 6;
+            m_Character.GetComponent<ThirdPersonCharacter>().m_JumpPower = 10;
             if (!m_Jump)
             {
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
@@ -97,7 +98,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 {
                     Debug.Log("Has Super Jumped");
                     m_Jump = true;
-                    m_Character.GetComponent<ThirdPersonCharacter>().m_JumpPower = 10;
+                    m_Character.GetComponent<ThirdPersonCharacter>().m_JumpPower = 15;
                     i.GetComponent<AIController>().interaction = true; 
                 }
             }

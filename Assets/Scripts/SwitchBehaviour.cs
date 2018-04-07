@@ -4,32 +4,36 @@ using UnityEngine;
 
 public class SwitchBehaviour : CoverBehaviour {
 
-    GameObject[] interactables; 
+    GameObject door; 
+	public bool switchJammed = false; 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
         rend = GetComponent<Renderer>();
         highlight = Shader.Find("Self-Illumin/Outlined Diffuse");
-        interactables = GameObject.FindGameObjectsWithTag("Interactable"); 
+		GameObject[] interactables = GameObject.FindGameObjectsWithTag("Interactable"); 
+		foreach (GameObject g in interactables)
+			if (g.GetComponent<MovingPlatBehaviour> () != null)
+				door = g;
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if (GetTakeCover() == false)
-            rend.material.color = Color.yellow;
+		if (GetTakeCover () == false) 
+		{
+			rend.material.color = Color.yellow;
+			if (!switchJammed)
+				door.GetComponent<MovingPlatBehaviour> ().Activate (false); 
+		}
         else
             rend.material.color = Color.red;
+
+		transform.GetChild (0).gameObject.SetActive (switchJammed);
     }
 
     void OnMouseDown()
     {
-        //If Clicked
-        foreach (GameObject x in interactables)
-        {
-            //Check if the interactable is a moving platform 
-            if (x.GetComponent<MovingPlatBehaviour>() != null)
-                x.GetComponent<MovingPlatBehaviour>().activate = false;
-        }
         SetTakeCover(!GetTakeCover());
     }
 }
