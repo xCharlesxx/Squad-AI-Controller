@@ -8,7 +8,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
     public class AIManager : MonoBehaviour
     {
 
-
+		public GameObject Arrow; 
         //public NavMeshAgent navMeshAgent;
         private GameObject[] teamMembers;
         private GameObject[] cover;
@@ -23,6 +23,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             commander = GameObject.FindGameObjectWithTag("Player");
             teamMembers = GameObject.FindGameObjectsWithTag("TeamMate");
             interactables = GameObject.FindGameObjectsWithTag("Interactable");
+			float displacement = 0; 
+			foreach (GameObject g in teamMembers) 
+			{
+				GameObject x = Instantiate (Arrow, new Vector3 ((Arrow.GetComponent<RectTransform>().rect.width/2) + displacement, (Arrow.GetComponent<RectTransform>().rect.width/2), 0), Quaternion.identity, GameObject.Find ("Canvas").transform);
+				displacement += x.GetComponent<RectTransform> ().rect.width; 
+				x.GetComponent<ArrowPointer> ().target = g.transform; 
+			}
         }
 
         // Update is called once per frame
