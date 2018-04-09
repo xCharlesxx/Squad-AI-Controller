@@ -28,7 +28,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			{
 				GameObject x = Instantiate (Arrow, new Vector3 ((Arrow.GetComponent<RectTransform>().rect.width/2) + displacement, (Arrow.GetComponent<RectTransform>().rect.width/2), 0), Quaternion.identity, GameObject.Find ("Canvas").transform);
 				displacement += x.GetComponent<RectTransform> ().rect.width; 
-				x.GetComponent<ArrowPointer> ().target = g.transform; 
+				x.GetComponent<ArrowPointer> ().target = g; 
 			}
         }
 
